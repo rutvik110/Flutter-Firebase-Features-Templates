@@ -1,0 +1,15 @@
+linter:
+  rules:
+    - prefer_const_constructors
+    - always_declare_return_types
+    - parameter_assignments
+    - always_require_non_null_named_parameters
+    - unnecessary_string_interpolations
+
+analyzer:
+  errors:
+    parameter_assignments: warning
+    prefer_const_constructors: warning
+    always_declare_return_types: warning
+    always_require_non_null_named_parameters: warning
+    unnecessary_string_interpolations: info
