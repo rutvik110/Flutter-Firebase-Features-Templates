@@ -13,19 +13,23 @@ To set up the firebase with your flutter project follow this steps
 Extra configurations may be needed for some features to work. You can learn how to set up those features through here</br>
 [FlutterFireDocs](https://firebase.flutter.dev/)
 
-
 ## Getting Started
 
 Base template provides firebase auth functionality which can be extended with other services.
 
 You can go through this list to see what features have been done so far.
 
+
+
 * Firebase Auth
   * Email Sign In
   * Google Sign In
-  * Apple Sign In
+  * Apple Sign In 
   
 
+
+## Note
+Features not yet tested with ios devices. Don't have the mac currently to test them out.
 <!-- ## Contributing
 
 If you would like to contribute to this project then please follow the guidelines for contributing.
