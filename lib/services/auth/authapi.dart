@@ -82,7 +82,7 @@ class AuthAPI {
       authResult = AuthError(result.code);
       return authResult;
     } catch (e) {
-      print('e');
+      print(e.toString());
       authResult = AuthError('Something went wrong. Please check your connection.');
 
       return authResult;
@@ -100,7 +100,7 @@ class AuthAPI {
       authResult = AuthError(result.code);
       return authResult;
     } catch (e) {
-      print('e');
+      print(e.toString());
       authResult = AuthError('Something went wrong. Please check your connection.');
 
       return authResult;
