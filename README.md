@@ -25,7 +25,13 @@ You can go through this list to see what features have been done so far.
   * Email Sign In
   * Google Sign In
   * Apple Sign In 
-  
+
+
+## Roadmap
+
+* Adding More Auth Providers
+* Firebase Notifications Integration And Handling
+* Firebase Dynamic Links Integration And Handling
 
 
 ## Note
