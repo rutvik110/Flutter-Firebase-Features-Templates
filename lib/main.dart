@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_feature_templates/modules/authentication/view/authroot.dart';
-import 'package:flutter_firebase_feature_templates/modules/home/view/home.dart';
 import 'package:flutter_firebase_feature_templates/routes/app_routes.dart';
+
+import 'routes/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,9 +18,13 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasData) {
           return MaterialApp(
             initialRoute: Routes.AUTHROOT,
-            routes: {
-              Routes.HOME: (context) => const Home(),
-              Routes.AUTHROOT: (context) => const AuthRoot(),
+            onGenerateRoute: generateroute,
+            onUnknownRoute: (route) {
+              return MaterialPageRoute(
+                  builder: (_) => Scaffold(
+                        backgroundColor: Colors.white,
+                        body: Text('data'),
+                      ));
             },
           );
         }

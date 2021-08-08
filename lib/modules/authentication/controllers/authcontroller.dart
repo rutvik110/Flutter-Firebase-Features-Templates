@@ -27,4 +27,8 @@ class AuthController {
   static Future<AuthResult> loginUserWithEmail(String email, String password) async {
     return AuthAPI.loginUserWithEmail(email, password);
   }
+
+  static Future<AuthResult> loginUserWithPhone(String phone_number, Function otpcallback, [String? resendtoken]) async {
+    return AuthAPI.loginUserWithPhone(phone_number, otpcallback, resendtoken);
+  }
 }

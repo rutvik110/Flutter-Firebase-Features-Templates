@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as fauth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_firebase_feature_templates/models/userdata.dart';
+import 'package:flutter_firebase_feature_templates/modules/authentication/view/login/login.dart';
 import 'package:flutter_firebase_feature_templates/utilities/database_data_paths.dart';
 import 'package:flutter_firebase_feature_templates/utilities/enums.dart';
 import 'package:flutter_firebase_feature_templates/utilities/interfaces/AuthResult.dart';
@@ -13,6 +14,15 @@ class AuthAPI {
   //function to create user doc
   static Stream<User?> get authstream {
     return _auth.authStateChanges();
+  }
+
+  static Future<void> signinwithcredentials(String verificationId, String smsCode) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+
+    await _auth.signInWithCredential(credential);
   }
 
   // static Future<void> createuserdoc(fauth.User user) async {
@@ -136,8 +146,56 @@ class AuthAPI {
       if (_authResult.additionalUserInfo!.isNewUser) {
         //Do anything here i.e. required when the user signs up for first time.
 
-       // await createuserdoc(_authResult.user!);
+        // await createuserdoc(_authResult.user!);
       }
     }
+  }
+
+  //login with phone number
+
+  static Future<AuthResult> loginUserWithPhone(String phone_number, Function otpcallback, [String? resendtoken]) async {
+    int? forceresendtoken = resendtoken != null ? int.parse(resendtoken) : null;
+    AuthResult authResult = AuthSuccess('Verifying please wait.');
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      forceResendingToken: forceresendtoken,
+      timeout: Duration(seconds: 60),
+      phoneNumber: phone_number,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        print("vercomplete" + credential.smsCode!);
+
+        authResult = AuthSuccess(credential.smsCode!);
+
+        // Sign the user in (or link) with the auto-generated credential
+        final userCredential = await _auth.signInWithCredential(credential);
+
+        if (userCredential.user != null) {
+          if (userCredential.additionalUserInfo!.isNewUser) {
+            //DO something here if required for a new user
+          }
+        }
+
+        // otpcallback(OTPSTATUS.VERIEFIED);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print("failed" + e.code);
+        authResult = AuthError(e.code);
+
+        otpcallback(OTPSTATUS.FAILED, [e.code]);
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        print("codesent" + resendToken.toString());
+        authResult = AuthSuccess(resendToken.toString());
+
+        otpcallback(OTPSTATUS.CODESENT, [verificationId, resendToken.toString()]);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        print("CART:" + verificationId);
+        authResult = AuthSuccess(verificationId);
+
+        otpcallback(OTPSTATUS.TIMEOUT, [verificationId]);
+      },
+    );
+
+    return authResult;
   }
 }

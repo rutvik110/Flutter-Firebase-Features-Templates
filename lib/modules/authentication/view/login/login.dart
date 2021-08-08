@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_feature_templates/modules/authentication/controllers/authcontroller.dart';
+import 'package:flutter_firebase_feature_templates/routes/app_routes.dart';
 import 'package:flutter_firebase_feature_templates/utilities/enums.dart';
 import 'package:flutter_firebase_feature_templates/utilities/interfaces/AuthResult.dart';
 import 'package:flutter_firebase_feature_templates/utilities/interfaces/authin.dart';
 import 'package:flutter_firebase_feature_templates/utilities/regx.dart';
+
+enum OTPSTATUS {
+  VERIEFIED,
+  CODESENT,
+  FAILED,
+  TIMEOUT,
+}
 
 class Login extends StatelessWidget implements AuthIn {
   Login({Key? key, this.changescreens}) : super(key: key);
@@ -12,6 +20,21 @@ class Login extends StatelessWidget implements AuthIn {
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
   final Duration duration = const Duration(milliseconds: 300);
+
+  Future<void> otpcallback(OTPSTATUS status) async {
+    switch (status) {
+      case OTPSTATUS.VERIEFIED:
+        break;
+      case OTPSTATUS.CODESENT:
+        break;
+
+      case OTPSTATUS.FAILED:
+        break;
+      case OTPSTATUS.TIMEOUT:
+        break;
+      default:
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +96,12 @@ class Login extends StatelessWidget implements AuthIn {
                           child: const Text("EMAIL LOG IN")),
                     ],
                   )),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pushNamed(context, Routes.OTPLOGIN);
+                },
+                child: const Text('Phone SIGN IN'),
+              ),
               ElevatedButton(
                 onPressed: () async {
                   AuthResult authResult = await AuthController.loginSocialUser(SOCIALLOGIN.GOOGLE);
