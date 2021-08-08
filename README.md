@@ -25,6 +25,14 @@ You can go through this list to see what features have been done so far.
   * Email Sign In
   * Google Sign In
   * Apple Sign In 
+  * OTP Sign In Added
+     * Country codes support not added yet
+        * default to '+91'
+     * testing credentials:              
+            number: 1234567890</br>
+            otp:111111
+     * need refactoring
+     
 
 
 ## Roadmap
