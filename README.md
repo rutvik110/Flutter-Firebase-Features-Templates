@@ -32,6 +32,9 @@ You can go through this list to see what features have been done so far.
             number: 1234567890</br>
             otp:111111
      * need refactoring
+* Firebase Dynamic Links and Notifications handling
+  * Supports opening dynamic links in all the states of the application
+  * Supports opening and handling of notifications outside/inside app
      
 
 
