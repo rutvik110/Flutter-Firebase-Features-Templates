@@ -28,10 +28,12 @@ Future<String> createDynamicLink(String recordId) async {
   return shortUrl.toString();
 }
 
-Future<void> getDynamicLinkFromLink(String link) async {
+Future<PendingDynamicLinkData?> getDynamicLinkFromLink(String link) async {
   final urlLink = Uri.parse(link);
 
   PendingDynamicLinkData? dynamiclink =
       await (FirebaseDynamicLinks.instance.getDynamicLink(urlLink));
   String? gameCode = dynamiclink?.link.queryParameters['gamecode'];
+
+  return dynamiclink;
 }
