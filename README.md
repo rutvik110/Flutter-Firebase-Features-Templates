@@ -35,6 +35,9 @@ You can go through this list to see what features have been done so far.
 * Firebase Dynamic Links and Notifications handling
   * Supports opening dynamic links in all the states of the application
   * Supports opening and handling of notifications outside/inside app
+* Firebase Storage
+  * API ready for upload
+  * View build in process
      
 
 
