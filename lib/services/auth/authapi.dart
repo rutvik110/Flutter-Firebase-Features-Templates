@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as fauth;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_firebase_feature_templates/models/userdata.dart';
 import 'package:flutter_firebase_feature_templates/modules/authentication/view/login/login.dart';
-import 'package:flutter_firebase_feature_templates/utilities/database_data_paths.dart';
 import 'package:flutter_firebase_feature_templates/utilities/enums.dart';
 import 'package:flutter_firebase_feature_templates/utilities/interfaces/AuthResult.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +14,8 @@ class AuthAPI {
     return _auth.authStateChanges();
   }
 
-  static Future<void> signinwithcredentials(String verificationId, String smsCode) async {
+  static Future<void> signinwithcredentials(
+      String verificationId, String smsCode) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId,
       smsCode: smsCode,
@@ -49,11 +48,13 @@ class AuthAPI {
     }
   }
 
-  static Future<AuthResult> signUpUserWithEmail(String email, String password) async {
+  static Future<AuthResult> signUpUserWithEmail(
+      String email, String password) async {
     AuthResult authResult;
     try {
       final fauth.UserCredential _authResult =
-          await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
+          await _auth.createUserWithEmailAndPassword(
+              email: email.trim(), password: password);
       //Do anything here i.e. required when the user signs up for first time.
 
       if (_authResult.user != null) {
@@ -66,7 +67,8 @@ class AuthAPI {
       return authResult;
     } catch (e) {
       print(e.toString());
-      authResult = AuthError('Something went wrong. Please check your connection.');
+      authResult =
+          AuthError('Something went wrong. Please check your connection.');
 
       return authResult;
     }
@@ -93,17 +95,20 @@ class AuthAPI {
       return authResult;
     } catch (e) {
       print(e.toString());
-      authResult = AuthError('Something went wrong. Please check your connection.');
+      authResult =
+          AuthError('Something went wrong. Please check your connection.');
 
       return authResult;
     }
   }
 
-  static Future<AuthResult> loginUserWithEmail(String email, String password) async {
+  static Future<AuthResult> loginUserWithEmail(
+      String email, String password) async {
     AuthResult authResult;
 
     try {
-      await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
+      await _auth.signInWithEmailAndPassword(
+          email: email.trim(), password: password);
       authResult = AuthSuccess('Success');
       return authResult;
     } on fauth.FirebaseAuthException catch (result) {
@@ -111,7 +116,8 @@ class AuthAPI {
       return authResult;
     } catch (e) {
       print(e.toString());
-      authResult = AuthError('Something went wrong. Please check your connection.');
+      authResult =
+          AuthError('Something went wrong. Please check your connection.');
 
       return authResult;
     }
@@ -122,9 +128,10 @@ class AuthAPI {
 
     GoogleSignInAccount? _googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication? _googleAuth = await _googleUser?.authentication;
-    final fauth.AuthCredential credential =
-        fauth.GoogleAuthProvider.credential(idToken: _googleAuth?.idToken, accessToken: _googleAuth?.accessToken);
-    final fauth.UserCredential _authResult = await _auth.signInWithCredential(credential);
+    final fauth.AuthCredential credential = fauth.GoogleAuthProvider.credential(
+        idToken: _googleAuth?.idToken, accessToken: _googleAuth?.accessToken);
+    final fauth.UserCredential _authResult =
+        await _auth.signInWithCredential(credential);
 
     if (_authResult.user != null) {
       if (_authResult.additionalUserInfo!.isNewUser) {
@@ -136,11 +143,13 @@ class AuthAPI {
   }
 
   static Future<void> loginUserWithApple() async {
-    sa.AuthorizationCredentialAppleID _appleSignIn = await sa.SignInWithApple.getAppleIDCredential(scopes: []);
+    sa.AuthorizationCredentialAppleID _appleSignIn =
+        await sa.SignInWithApple.getAppleIDCredential(scopes: []);
 
-    final fauth.AuthCredential credential =
-        fauth.OAuthProvider("apple.com").credential(idToken: _appleSignIn.identityToken);
-    final fauth.UserCredential _authResult = await _auth.signInWithCredential(credential);
+    final fauth.AuthCredential credential = fauth.OAuthProvider("apple.com")
+        .credential(idToken: _appleSignIn.identityToken);
+    final fauth.UserCredential _authResult =
+        await _auth.signInWithCredential(credential);
 
     if (_authResult.user != null) {
       if (_authResult.additionalUserInfo!.isNewUser) {
@@ -153,12 +162,14 @@ class AuthAPI {
 
   //login with phone number
 
-  static Future<AuthResult> loginUserWithPhone(String phone_number, Function otpcallback, [String? resendtoken]) async {
+  static Future<AuthResult> loginUserWithPhone(
+      String phone_number, Function otpcallback,
+      [String? resendtoken]) async {
     int? forceresendtoken = resendtoken != null ? int.parse(resendtoken) : null;
     AuthResult authResult = AuthSuccess('Verifying please wait.');
     await FirebaseAuth.instance.verifyPhoneNumber(
       forceResendingToken: forceresendtoken,
-      timeout: Duration(seconds: 60),
+      timeout: const Duration(seconds: 60),
       phoneNumber: phone_number,
       verificationCompleted: (PhoneAuthCredential credential) async {
         print("vercomplete" + credential.smsCode!);
@@ -186,7 +197,8 @@ class AuthAPI {
         print("codesent" + resendToken.toString());
         authResult = AuthSuccess(resendToken.toString());
 
-        otpcallback(OTPSTATUS.CODESENT, [verificationId, resendToken.toString()]);
+        otpcallback(
+            OTPSTATUS.CODESENT, [verificationId, resendToken.toString()]);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         print("CART:" + verificationId);

@@ -1,5 +1,7 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
+///https://medium.com/flutterdevs/firebase-dynamic-links-in-flutter-ab49377dfe40
+///Dynamic Links Setup Article
 Future<String> createDynamicLink(String recordId) async {
   // final chatroomid = user.user.uid;
 
