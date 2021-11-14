@@ -44,9 +44,8 @@ You can go through this list to see what features have been done so far.
 ## Roadmap
 
 * Adding More Auth Providers
-* Firebase Notifications Integration And Handling
-* Firebase Dynamic Links Integration And Handling
-
+* Upload And Download of files across various platforms
+* 
 
 ## Note
 Features not yet tested with ios devices. Don't have the mac currently to test them out.
