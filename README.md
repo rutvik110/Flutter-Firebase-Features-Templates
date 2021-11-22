@@ -46,9 +46,6 @@ You can go through this list to see what features have been done so far.
 * Adding More Auth Providers
 * Upload And Download of files across various platforms
 * 
-
-## Note
-Features not yet tested with ios devices. Don't have the mac currently to test them out.
 <!-- ## Contributing
 
 If you would like to contribute to this project then please follow the guidelines for contributing.
